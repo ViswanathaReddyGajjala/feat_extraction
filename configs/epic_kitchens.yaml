@@ -19,7 +19,7 @@ DATA:
   TMP_FOLDER: "frames_tmp"
   FPS: 30
   VID_FILE_EXT: ".mp4"
-  SAMPLE_SIZE: [288, 288]
+  SAMPLE_SIZE: [512, 288] # ffmpeg 512 x 288  # cv2: (288, 512)
   MEAN: [0.45, 0.45, 0.45]
   STD: [0.225, 0.225, 0.225]
   REVERSE_INPUT_CHANNEL: False
@@ -40,5 +40,21 @@ LOG_MODEL_INFO: False
 NUM_GPUS: 2
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: "epickitchen_feats" # "./sf_8x8_R50_feats"
 
+# MULTI_CROP:
+#  LEFT: true
+#  MIDDLE: false
+#  RIGHT: false
+#OUTPUT_DIR: "epickitchen_feats/left" # related to multicrop left,middle,right
+
+# MULTI_CROP:
+#  LEFT: false
+#  MIDDLE: true
+#  RIGHT: false
+# OUTPUT_DIR: "epickitchen_feats/middle" # related to multicrop left,middle,right
+
+MULTI_CROP:
+  LEFT: false
+  MIDDLE: false
+  RIGHT: true
+OUTPUT_DIR: "epickitchen_feats/right" # related to multicrop left,middle,right

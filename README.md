@@ -3,9 +3,10 @@
 # Feature Extraction:
 
 * For feature extraction: ```python -W ignore runs/run.py --cfg configs/projects/epic-kitchen-ar/vivit_fac_enc_ek100.yaml ```
-* Main config file used for the dataloader : [epic_kitches.yaml](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/configs/epic_kitchens.yaml)
+* It takes time to create a standalone repository for the ViViT feature extractor. Also, due to the dependencies involved, I've integrated the slow-fast dataloder into this repository.
+* Main config file used for the dataloader : [epic_kitches.yaml](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/configs/epic_kitchens.yaml). Almost same as the PytorchVideo feature extractor.
 * Config file for the ViViT model: [vivit](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/configs/projects/epic-kitchen-ar/vivit_fac_enc_ek100.yaml)
-* Dataloader file used for extraction: [epic_kitchens](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/epic_kitches_dataloader.py)
+* Dataloader file used for extraction: [epic_kitchens](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/epic_kitches_dataloader.py). Code taken from the SlowFast feature extractor repo.
 * Please refer to [feats](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/runs/test.py) for the feature extraction code. Inference happens in the ```perform_test``` function. 
 
 # 

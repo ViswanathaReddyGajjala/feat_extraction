@@ -1,4 +1,15 @@
 <!-- # pytorch-video-understanding -->
+
+# Feature Extraction:
+
+* For feature extraction: ```python -W ignore runs/run.py --cfg configs/projects/epic-kitchen-ar/vivit_fac_enc_ek100.yaml ```
+* Main config file used for the dataloader : [epic_kitches.yaml](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/configs/epic_kitchens.yaml)
+* Config file for the ViViT model: [vivit](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/configs/projects/epic-kitchen-ar/vivit_fac_enc_ek100.yaml)
+* Dataloader file used for extraction: [epic_kitchens](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/epic_kitches_dataloader.py)
+* Please refer to [feats](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/runs/test.py) for the feature extraction code. Inference happens in the ```perform_test``` function. 
+
+# 
+#
 # TAda! TAdaConv for Video Understanding
 
 This repository provides the official pytorch implementation of the following papers for video classification and temporal localization. For more details on the respective paper, please refer to the [project folder](projects/). 

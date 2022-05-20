@@ -108,7 +108,7 @@ class VideoDataset(torch.utils.data.Dataset):
         arr = torch.from_numpy(arr).float()
 
         # Normalize the values
-        arr = arr / 255.0
+        arr = arr / 255.0 # @TODO 
         arr = arr - torch.tensor(self.cfg.DATA.MEAN)
         arr = arr / torch.tensor(self.cfg.DATA.STD)
 
@@ -150,6 +150,17 @@ class VideoDataset(torch.utils.data.Dataset):
         img_list = tuple()
         for idx in range(start, end, self.step_size):
             img = cv2.imread(self.frame_list[idx])
+            
+            # Multi crop ensemble
+            if self.cfg.MULTI_CROP.LEFT:
+                img = img[:, :288, :] # 1st crop 
+            elif self.cfg.MULTI_CROP.MIDDLE:
+                img = img[:, 144: 432, :] # middle crop
+            elif self.cfg.MULTI_CROP.RIGHT:
+                img = img[:, -288: , :] # last crop
+            else:
+                raise ("Unsupported multicrop...")
+                
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # BGR --> RGB
             img_list += (img[np.newaxis, :, :, :],)
 

@@ -15,7 +15,7 @@ DATA:
   STRIDE: 16 
   PATH_TO_DATA_DIR: /home/shared_dataset/epic_kitchens_100_videos # "/videos/code/mmaction2/"
   PATH_PREFIX: ""
-  VID_LIST: "epick100_videos_list.txt"
+  VID_LIST: "epick100_videos_list_with_frames.txt"
   TMP_FOLDER: "frames_tmp"
   FPS: 30
   VID_FILE_EXT: ".mp4"

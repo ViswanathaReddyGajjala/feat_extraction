@@ -1,0 +1,1446 @@
+[05/21 02:54:51][INFO] test:  400: Test with config:
+[05/21 02:54:51][INFO] test:  401: {
+  "TASK_TYPE": "classification",
+  "PRETRAIN": {
+    "ENABLE": false
+  },
+  "LOCALIZATION": {
+    "ENABLE": false
+  },
+  "TRAIN": {
+    "ENABLE": false,
+    "DATASET": "epickitchen100",
+    "BATCH_SIZE": 2,
+    "LOG_FILE": "training_log.log",
+    "EVAL_PERIOD": 5,
+    "NUM_FOLDS": 1,
+    "AUTO_RESUME": true,
+    "CHECKPOINT_PERIOD": 5,
+    "IMAGENET_INIT": false,
+    "CHECKPOINT_FILE_PATH": "",
+    "CHECKPOINT_TYPE": "pytorch",
+    "CHECKPOINT_INFLATE": false,
+    "CHECKPOINT_PRE_PROCESS": {
+      "ENABLE": true,
+      "POP_HEAD": true,
+      "POS_EMBED": null,
+      "PATCH_EMBD": "central_frame"
+    },
+    "FINE_TUNE": false,
+    "ONLY_LINEAR": false,
+    "LR_REDUCE": false,
+    "TRAIN_VAL_COMBINE": false,
+    "LOSS_FUNC": "cross_entropy"
+  },
+  "TEST": {
+    "ENABLE": true,
+    "DATASET": "epickitchen100",
+    "BATCH_SIZE": 1,
+    "NUM_SPATIAL_CROPS": 3,
+    "SPATIAL_CROPS": "cc",
+    "NUM_ENSEMBLE_VIEWS": 1,
+    "LOG_FILE": "val.log",
+    "CHECKPOINT_FILE_PATH": "",
+    "CHECKPOINT_TYPE": "pytorch",
+    "AUTOMATIC_MULTI_SCALE_TEST": true,
+    "AUTOMATIC_MULTI_SCALE_TEST_SPATIAL": true
+  },
+  "VISUALIZATION": {
+    "ENABLE": false,
+    "NAME": "",
+    "FEATURE_MAPS": {
+      "ENABLE": false,
+      "BASE_OUTPUT_DIR": ""
+    }
+  },
+  "SUBMISSION": {
+    "ENABLE": false,
+    "SAVE_RESULTS_PATH": "test.json"
+  },
+  "DATA": {
+    "DATA_ROOT_DIR": "/home/shared_dataset/epic_kitchens_100_clips",
+    "ANNO_DIR": "/home/shared_dataset/epic_kitchens_annotations/csv_files",
+    "NUM_INPUT_FRAMES": 32,
+    "NUM_INPUT_CHANNELS": 3,
+    "SAMPLING_MODE": "interval_based",
+    "SAMPLING_RATE": 1,
+    "TRAIN_JITTER_SCALES": [
+      256,
+      320
+    ],
+    "TRAIN_CROP_SIZE": 224,
+    "TEST_SCALE": 224,
+    "TEST_CROP_SIZE": 224,
+    "MEAN": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "STD": [
+      0.225,
+      0.225,
+      0.225
+    ],
+    "MULTI_LABEL": true,
+    "ENSEMBLE_METHOD": "sum",
+    "TARGET_FPS": 30,
+    "MINUS_INTERVAL": false,
+    "FPS": 30
+  },
+  "MODEL": {
+    "NAME": "vivit",
+    "EMA": {
+      "ENABLE": false,
+      "DECAY": 0.99996
+    }
+  },
+  "VIDEO": {
+    "BACKBONE": {
+      "DEPTH": 12,
+      "META_ARCH": "FactorizedTransformer",
+      "NUM_FILTERS": null,
+      "NUM_INPUT_CHANNELS": 3,
+      "NUM_OUT_FEATURES": 768,
+      "KERNEL_SIZE": null,
+      "DOWNSAMPLING": null,
+      "DOWNSAMPLING_TEMPORAL": null,
+      "NUM_STREAMS": 1,
+      "EXPANSION_RATIO": 2,
+      "BRANCH": {
+        "NAME": "BaseTransformerLayer"
+      },
+      "STEM": {
+        "NAME": "TubeletEmbeddingStem"
+      },
+      "NONLOCAL": {
+        "ENABLE": false,
+        "STAGES": [
+          5
+        ],
+        "MASK_ENABLE": false
+      },
+      "INITIALIZATION": null,
+      "NUM_FEATURES": 768,
+      "PATCH_SIZE": 16,
+      "TUBELET_SIZE": 2,
+      "DEPTH_TEMP": 4,
+      "NUM_HEADS": 12,
+      "DIM_HEAD": 64,
+      "ATTN_DROPOUT": 0.0,
+      "FF_DROPOUT": 0.0,
+      "DROP_PATH": 0.1,
+      "MLP_MULT": 4
+    },
+    "HEAD": {
+      "NAME": "TransformerHeadx2",
+      "ACTIVATION": "softmax",
+      "DROPOUT_RATE": 0.5,
+      "NUM_CLASSES": [
+        97,
+        300
+      ],
+      "PRE_LOGITS": false
+    }
+  },
+  "OPTIMIZER": {
+    "ADJUST_LR": false,
+    "BASE_LR": 0.0001,
+    "LR_POLICY": "cosine",
+    "MAX_EPOCH": 50,
+    "MOMENTUM": 0.9,
+    "WEIGHT_DECAY": 0.05,
+    "WARMUP_EPOCHS": 5,
+    "WARMUP_START_LR": 1e-06,
+    "OPTIM_METHOD": "adamw",
+    "DAMPENING": 0.0,
+    "NESTEROV": true,
+    "BIAS_DOUBLE": false
+  },
+  "BN": {
+    "WB_LOCK": false,
+    "FREEZE": false,
+    "WEIGHT_DECAY": 0.0,
+    "MOMENTUM": 0.1,
+    "EPS": "1e-5",
+    "SYNC": false
+  },
+  "DATA_LOADER": {
+    "NUM_WORKERS": 4,
+    "PIN_MEMORY": false,
+    "ENABLE_MULTI_THREAD_DECODE": true,
+    "COLLATE_FN": null
+  },
+  "NUM_GPUS": 1,
+  "SHARD_ID": 0,
+  "NUM_SHARDS": 1,
+  "RANDOM_SEED": 0,
+  "OUTPUT_DIR": null,
+  "OUTPUT_CFG_FILE": "configuration.log",
+  "LOG_PERIOD": 10,
+  "DIST_BACKEND": "nccl",
+  "LOG_MODEL_INFO": true,
+  "LOG_CONFIG_INFO": true,
+  "OSS": {
+    "ENABLE": false,
+    "KEY": null,
+    "SECRET": null,
+    "ENDPOINT": null,
+    "CHECKPOINT_OUTPUT_PATH": null,
+    "SECONDARY_DATA_OSS": {
+      "ENABLE": false,
+      "KEY": null,
+      "SECRET": null,
+      "ENDPOINT": null,
+      "BUCKETS": [
+        ""
+      ]
+    }
+  },
+  "AUGMENTATION": {
+    "COLOR_AUG": false,
+    "BRIGHTNESS": 0.5,
+    "CONTRAST": 0.5,
+    "SATURATION": 0.5,
+    "HUE": 0.25,
+    "GRAYSCALE": 0.3,
+    "CONSISTENT": true,
+    "SHUFFLE": true,
+    "GRAY_FIRST": true,
+    "RATIO": [
+      0.857142857142857,
+      1.1666666666666667
+    ],
+    "USE_GPU": false,
+    "MIXUP": {
+      "ENABLE": false,
+      "ALPHA": 0.0,
+      "PROB": 1.0,
+      "MODE": "batch",
+      "SWITCH_PROB": 0.5
+    },
+    "CUTMIX": {
+      "ENABLE": false,
+      "ALPHA": 0.0,
+      "MINMAX": null
+    },
+    "RANDOM_ERASING": {
+      "ENABLE": false,
+      "PROB": 0.25,
+      "MODE": "const",
+      "COUNT": [
+        1,
+        1
+      ],
+      "NUM_SPLITS": 0,
+      "AREA_RANGE": [
+        0.02,
+        0.33
+      ],
+      "MIN_ASPECT": 0.3
+    },
+    "LABEL_SMOOTHING": 0.0,
+    "SSV2_FLIP": false
+  },
+  "PAI": false,
+  "USE_MULTISEG_VAL_DIST": false,
+  "FEATURES": {
+    "OUTPUT_PATH": "vivit_feats"
+  }
+}
+
+[05/21 02:55:07][INFO] utils.misc:  155: Model:
+BaseVideoModel(
+  (backbone): FactorizedTransformer(
+    (stem): TubeletEmbeddingStem(
+      (conv1): Conv3d(3, 768, kernel_size=(2, 16, 16), stride=(2, 16, 16))
+    )
+    (layers): Sequential(
+      (0): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): Identity()
+      )
+      (1): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (2): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (3): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (4): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (5): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (6): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (7): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (8): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (9): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (10): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (11): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+    (layers_temporal): Sequential(
+      (0): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (1): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (2): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (3): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+    )
+    (norm_out): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (head): TransformerHeadx2(
+    (linear1): Linear(in_features=768, out_features=97, bias=True)
+    (linear2): Linear(in_features=768, out_features=300, bias=True)
+    (dropout): Dropout(p=0.5, inplace=False)
+    (activation): Softmax(dim=-1)
+  )
+)
+[05/21 02:55:07][INFO] utils.misc:  156: Params: 115,060,621
+[05/21 02:55:07][INFO] utils.misc:  157: Mem: 0.4286346435546875 MB
+[05/21 02:55:07][INFO] utils.misc:  164: nvidia-smi
+[05/21 02:55:07][INFO] utils.checkpoint:  532: Unknown way of loading checkpoint. Using with random initialization, only for debugging.
+[05/21 02:55:07][INFO] datasets.base.epickitchen100:   54: Reading video list from file: EPIC_100_validation.csv
+[05/21 02:55:07][INFO] datasets.base.base_dataset:  177: Loading epickitchen100 dataset list for split 'test'...
+[05/21 02:55:07][INFO] datasets.base.base_dataset:  203: Dataset epickitchen100 split test loaded. Length 29004.
+[05/21 02:55:07][INFO] test:  418: Testing model for 29004 iterations
+[05/21 04:05:26][INFO] test:  400: Test with config:
+[05/21 04:05:26][INFO] test:  401: {
+  "TASK_TYPE": "classification",
+  "PRETRAIN": {
+    "ENABLE": false
+  },
+  "LOCALIZATION": {
+    "ENABLE": false
+  },
+  "TRAIN": {
+    "ENABLE": false,
+    "DATASET": "epickitchen100",
+    "BATCH_SIZE": 2,
+    "LOG_FILE": "training_log.log",
+    "EVAL_PERIOD": 5,
+    "NUM_FOLDS": 1,
+    "AUTO_RESUME": true,
+    "CHECKPOINT_PERIOD": 5,
+    "IMAGENET_INIT": false,
+    "CHECKPOINT_FILE_PATH": "",
+    "CHECKPOINT_TYPE": "pytorch",
+    "CHECKPOINT_INFLATE": false,
+    "CHECKPOINT_PRE_PROCESS": {
+      "ENABLE": true,
+      "POP_HEAD": true,
+      "POS_EMBED": null,
+      "PATCH_EMBD": "central_frame"
+    },
+    "FINE_TUNE": false,
+    "ONLY_LINEAR": false,
+    "LR_REDUCE": false,
+    "TRAIN_VAL_COMBINE": false,
+    "LOSS_FUNC": "cross_entropy"
+  },
+  "TEST": {
+    "ENABLE": true,
+    "DATASET": "epickitchen100",
+    "BATCH_SIZE": 1,
+    "NUM_SPATIAL_CROPS": 3,
+    "SPATIAL_CROPS": "cc",
+    "NUM_ENSEMBLE_VIEWS": 1,
+    "LOG_FILE": "val.log",
+    "CHECKPOINT_FILE_PATH": "",
+    "CHECKPOINT_TYPE": "pytorch",
+    "AUTOMATIC_MULTI_SCALE_TEST": true,
+    "AUTOMATIC_MULTI_SCALE_TEST_SPATIAL": true
+  },
+  "VISUALIZATION": {
+    "ENABLE": false,
+    "NAME": "",
+    "FEATURE_MAPS": {
+      "ENABLE": false,
+      "BASE_OUTPUT_DIR": ""
+    }
+  },
+  "SUBMISSION": {
+    "ENABLE": false,
+    "SAVE_RESULTS_PATH": "test.json"
+  },
+  "DATA": {
+    "DATA_ROOT_DIR": "/home/shared_dataset/epic_kitchens_100_clips",
+    "ANNO_DIR": "/home/shared_dataset/epic_kitchens_annotations/csv_files",
+    "NUM_INPUT_FRAMES": 32,
+    "NUM_INPUT_CHANNELS": 3,
+    "SAMPLING_MODE": "interval_based",
+    "SAMPLING_RATE": 1,
+    "TRAIN_JITTER_SCALES": [
+      256,
+      320
+    ],
+    "TRAIN_CROP_SIZE": 224,
+    "TEST_SCALE": 224,
+    "TEST_CROP_SIZE": 224,
+    "MEAN": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "STD": [
+      0.225,
+      0.225,
+      0.225
+    ],
+    "MULTI_LABEL": true,
+    "ENSEMBLE_METHOD": "sum",
+    "TARGET_FPS": 30,
+    "MINUS_INTERVAL": false,
+    "FPS": 30
+  },
+  "MODEL": {
+    "NAME": "vivit",
+    "EMA": {
+      "ENABLE": false,
+      "DECAY": 0.99996
+    }
+  },
+  "VIDEO": {
+    "BACKBONE": {
+      "DEPTH": 12,
+      "META_ARCH": "FactorizedTransformer",
+      "NUM_FILTERS": null,
+      "NUM_INPUT_CHANNELS": 3,
+      "NUM_OUT_FEATURES": 768,
+      "KERNEL_SIZE": null,
+      "DOWNSAMPLING": null,
+      "DOWNSAMPLING_TEMPORAL": null,
+      "NUM_STREAMS": 1,
+      "EXPANSION_RATIO": 2,
+      "BRANCH": {
+        "NAME": "BaseTransformerLayer"
+      },
+      "STEM": {
+        "NAME": "TubeletEmbeddingStem"
+      },
+      "NONLOCAL": {
+        "ENABLE": false,
+        "STAGES": [
+          5
+        ],
+        "MASK_ENABLE": false
+      },
+      "INITIALIZATION": null,
+      "NUM_FEATURES": 768,
+      "PATCH_SIZE": 16,
+      "TUBELET_SIZE": 2,
+      "DEPTH_TEMP": 4,
+      "NUM_HEADS": 12,
+      "DIM_HEAD": 64,
+      "ATTN_DROPOUT": 0.0,
+      "FF_DROPOUT": 0.0,
+      "DROP_PATH": 0.1,
+      "MLP_MULT": 4
+    },
+    "HEAD": {
+      "NAME": "TransformerHeadx2",
+      "ACTIVATION": "softmax",
+      "DROPOUT_RATE": 0.5,
+      "NUM_CLASSES": [
+        97,
+        300
+      ],
+      "PRE_LOGITS": false
+    }
+  },
+  "OPTIMIZER": {
+    "ADJUST_LR": false,
+    "BASE_LR": 0.0001,
+    "LR_POLICY": "cosine",
+    "MAX_EPOCH": 50,
+    "MOMENTUM": 0.9,
+    "WEIGHT_DECAY": 0.05,
+    "WARMUP_EPOCHS": 5,
+    "WARMUP_START_LR": 1e-06,
+    "OPTIM_METHOD": "adamw",
+    "DAMPENING": 0.0,
+    "NESTEROV": true,
+    "BIAS_DOUBLE": false
+  },
+  "BN": {
+    "WB_LOCK": false,
+    "FREEZE": false,
+    "WEIGHT_DECAY": 0.0,
+    "MOMENTUM": 0.1,
+    "EPS": "1e-5",
+    "SYNC": false
+  },
+  "DATA_LOADER": {
+    "NUM_WORKERS": 4,
+    "PIN_MEMORY": false,
+    "ENABLE_MULTI_THREAD_DECODE": true,
+    "COLLATE_FN": null
+  },
+  "NUM_GPUS": 1,
+  "SHARD_ID": 0,
+  "NUM_SHARDS": 1,
+  "RANDOM_SEED": 0,
+  "OUTPUT_DIR": null,
+  "OUTPUT_CFG_FILE": "configuration.log",
+  "LOG_PERIOD": 10,
+  "DIST_BACKEND": "nccl",
+  "LOG_MODEL_INFO": true,
+  "LOG_CONFIG_INFO": true,
+  "OSS": {
+    "ENABLE": false,
+    "KEY": null,
+    "SECRET": null,
+    "ENDPOINT": null,
+    "CHECKPOINT_OUTPUT_PATH": null,
+    "SECONDARY_DATA_OSS": {
+      "ENABLE": false,
+      "KEY": null,
+      "SECRET": null,
+      "ENDPOINT": null,
+      "BUCKETS": [
+        ""
+      ]
+    }
+  },
+  "AUGMENTATION": {
+    "COLOR_AUG": false,
+    "BRIGHTNESS": 0.5,
+    "CONTRAST": 0.5,
+    "SATURATION": 0.5,
+    "HUE": 0.25,
+    "GRAYSCALE": 0.3,
+    "CONSISTENT": true,
+    "SHUFFLE": true,
+    "GRAY_FIRST": true,
+    "RATIO": [
+      0.857142857142857,
+      1.1666666666666667
+    ],
+    "USE_GPU": false,
+    "MIXUP": {
+      "ENABLE": false,
+      "ALPHA": 0.0,
+      "PROB": 1.0,
+      "MODE": "batch",
+      "SWITCH_PROB": 0.5
+    },
+    "CUTMIX": {
+      "ENABLE": false,
+      "ALPHA": 0.0,
+      "MINMAX": null
+    },
+    "RANDOM_ERASING": {
+      "ENABLE": false,
+      "PROB": 0.25,
+      "MODE": "const",
+      "COUNT": [
+        1,
+        1
+      ],
+      "NUM_SPLITS": 0,
+      "AREA_RANGE": [
+        0.02,
+        0.33
+      ],
+      "MIN_ASPECT": 0.3
+    },
+    "LABEL_SMOOTHING": 0.0,
+    "SSV2_FLIP": false
+  },
+  "PAI": false,
+  "USE_MULTISEG_VAL_DIST": false,
+  "FEATURES": {
+    "OUTPUT_PATH": "vivit_feats"
+  }
+}
+
+[05/21 04:05:43][INFO] utils.misc:  155: Model:
+BaseVideoModel(
+  (backbone): FactorizedTransformer(
+    (stem): TubeletEmbeddingStem(
+      (conv1): Conv3d(3, 768, kernel_size=(2, 16, 16), stride=(2, 16, 16))
+    )
+    (layers): Sequential(
+      (0): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): Identity()
+      )
+      (1): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (2): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (3): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (4): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (5): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (6): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (7): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (8): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (9): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (10): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (11): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+    (layers_temporal): Sequential(
+      (0): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (1): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (2): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+      (3): BaseTransformerLayer(
+        (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (to_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (attn_dropout): Dropout(p=0.0, inplace=False)
+          (proj): Linear(in_features=768, out_features=768, bias=True)
+          (ff_dropout): Dropout(p=0.0, inplace=False)
+        )
+        (norm_ffn): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (ffn): FeedForward(
+          (net): Sequential(
+            (0): Linear(in_features=768, out_features=3072, bias=True)
+            (1): GELU()
+            (2): Dropout(p=0.0, inplace=False)
+            (3): Linear(in_features=3072, out_features=768, bias=True)
+            (4): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (drop_path): DropPath()
+      )
+    )
+    (norm_out): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (head): TransformerHeadx2(
+    (linear1): Linear(in_features=768, out_features=97, bias=True)
+    (linear2): Linear(in_features=768, out_features=300, bias=True)
+    (dropout): Dropout(p=0.5, inplace=False)
+    (activation): Softmax(dim=-1)
+  )
+)
+[05/21 04:05:43][INFO] utils.misc:  156: Params: 115,060,621
+[05/21 04:05:43][INFO] utils.misc:  157: Mem: 0.4286346435546875 MB
+[05/21 04:05:43][INFO] utils.misc:  164: nvidia-smi
+[05/21 04:05:43][INFO] utils.checkpoint:  532: Unknown way of loading checkpoint. Using with random initialization, only for debugging.
+[05/21 04:05:43][INFO] datasets.base.epickitchen100:   54: Reading video list from file: EPIC_100_validation.csv
+[05/21 04:05:43][INFO] datasets.base.base_dataset:  177: Loading epickitchen100 dataset list for split 'test'...
+[05/21 04:05:43][INFO] datasets.base.base_dataset:  203: Dataset epickitchen100 split test loaded. Length 29004.
+[05/21 04:05:43][INFO] test:  418: Testing model for 29004 iterations
+[05/21 04:06:22][INFO] test:  400: Test with config:
+[05/21 04:06:22][INFO] test:  401: {
+  "TASK_TYPE": "classification",
+  "PRETRAIN": {
+    "ENABLE": false
+  },
+  "LOCALIZATION": {
+    "ENABLE": false
+  },
+  "TRAIN": {
+    "ENABLE": false,
+    "DATASET": "epickitchen100",
+    "BATCH_SIZE": 2,
+    "LOG_FILE": "training_log.log",
+    "EVAL_PERIOD": 5,
+    "NUM_FOLDS": 1,
+    "AUTO_RESUME": true,
+    "CHECKPOINT_PERIOD": 5,
+    "IMAGENET_INIT": false,
+    "CHECKPOINT_FILE_PATH": "",
+    "CHECKPOINT_TYPE": "pytorch",
+    "CHECKPOINT_INFLATE": false,
+    "CHECKPOINT_PRE_PROCESS": {
+      "ENABLE": true,
+      "POP_HEAD": true,
+      "POS_EMBED": null,
+      "PATCH_EMBD": "central_frame"
+    },
+    "FINE_TUNE": false,
+    "ONLY_LINEAR": false,
+    "LR_REDUCE": false,
+    "TRAIN_VAL_COMBINE": false,
+    "LOSS_FUNC": "cross_entropy"
+  },
+  "TEST": {
+    "ENABLE": true,
+    "DATASET": "epickitchen100",
+    "BATCH_SIZE": 1,
+    "NUM_SPATIAL_CROPS": 3,
+    "SPATIAL_CROPS": "cc",
+    "NUM_ENSEMBLE_VIEWS": 1,
+    "LOG_FILE": "val.log",
+    "CHECKPOINT_FILE_PATH": "",
+    "CHECKPOINT_TYPE": "pytorch",
+    "AUTOMATIC_MULTI_SCALE_TEST": true,
+    "AUTOMATIC_MULTI_SCALE_TEST_SPATIAL": true
+  },
+  "VISUALIZATION": {
+    "ENABLE": false,
+    "NAME": "",
+    "FEATURE_MAPS": {
+      "ENABLE": false,
+      "BASE_OUTPUT_DIR": ""
+    }
+  },
+  "SUBMISSION": {
+    "ENABLE": false,
+    "SAVE_RESULTS_PATH": "test.json"
+  },
+  "DATA": {
+    "DATA_ROOT_DIR": "/home/shared_dataset/epic_kitchens_100_clips",
+    "ANNO_DIR": "/home/shared_dataset/epic_kitchens_annotations/csv_files",
+    "NUM_INPUT_FRAMES": 32,
+    "NUM_INPUT_CHANNELS": 3,
+    "SAMPLING_MODE": "interval_based",
+    "SAMPLING_RATE": 1,
+    "TRAIN_JITTER_SCALES": [
+      256,
+      320
+    ],
+    "TRAIN_CROP_SIZE": 320,
+    "TEST_SCALE": 224,
+    "TEST_CROP_SIZE": 224,
+    "MEAN": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "STD": [
+      0.225,
+      0.225,
+      0.225
+    ],
+    "MULTI_LABEL": true,
+    "ENSEMBLE_METHOD": "sum",
+    "TARGET_FPS": 30,
+    "MINUS_INTERVAL": false,
+    "FPS": 30
+  },
+  "MODEL": {
+    "NAME": "vivit",
+    "EMA": {
+      "ENABLE": false,
+      "DECAY": 0.99996
+    }
+  },
+  "VIDEO": {
+    "BACKBONE": {
+      "DEPTH": 12,
+      "META_ARCH": "FactorizedTransformer",
+      "NUM_FILTERS": null,
+      "NUM_INPUT_CHANNELS": 3,
+      "NUM_OUT_FEATURES": 768,
+      "KERNEL_SIZE": null,
+      "DOWNSAMPLING": null,
+      "DOWNSAMPLING_TEMPORAL": null,
+      "NUM_STREAMS": 1,
+      "EXPANSION_RATIO": 2,
+      "BRANCH": {
+        "NAME": "BaseTransformerLayer"
+      },
+      "STEM": {
+        "NAME": "TubeletEmbeddingStem"
+      },
+      "NONLOCAL": {
+        "ENABLE": false,
+        "STAGES": [
+          5
+        ],
+        "MASK_ENABLE": false
+      },
+      "INITIALIZATION": null,
+      "NUM_FEATURES": 768,
+      "PATCH_SIZE": 16,
+      "TUBELET_SIZE": 2,
+      "DEPTH_TEMP": 4,
+      "NUM_HEADS": 12,
+      "DIM_HEAD": 64,
+      "ATTN_DROPOUT": 0.0,
+      "FF_DROPOUT": 0.0,
+      "DROP_PATH": 0.1,
+      "MLP_MULT": 4
+    },
+    "HEAD": {
+      "NAME": "TransformerHeadx2",
+      "ACTIVATION": "softmax",
+      "DROPOUT_RATE": 0.5,
+      "NUM_CLASSES": [
+        97,
+        300
+      ],
+      "PRE_LOGITS": false
+    }
+  },
+  "OPTIMIZER": {
+    "ADJUST_LR": false,
+    "BASE_LR": 0.0001,
+    "LR_POLICY": "cosine",
+    "MAX_EPOCH": 50,
+    "MOMENTUM": 0.9,
+    "WEIGHT_DECAY": 0.05,
+    "WARMUP_EPOCHS": 5,
+    "WARMUP_START_LR": 1e-06,
+    "OPTIM_METHOD": "adamw",
+    "DAMPENING": 0.0,
+    "NESTEROV": true,
+    "BIAS_DOUBLE": false
+  },
+  "BN": {
+    "WB_LOCK": false,
+    "FREEZE": false,
+    "WEIGHT_DECAY": 0.0,
+    "MOMENTUM": 0.1,
+    "EPS": "1e-5",
+    "SYNC": false
+  },
+  "DATA_LOADER": {
+    "NUM_WORKERS": 4,
+    "PIN_MEMORY": false,
+    "ENABLE_MULTI_THREAD_DECODE": true,
+    "COLLATE_FN": null
+  },
+  "NUM_GPUS": 1,
+  "SHARD_ID": 0,
+  "NUM_SHARDS": 1,
+  "RANDOM_SEED": 0,
+  "OUTPUT_DIR": null,
+  "OUTPUT_CFG_FILE": "configuration.log",
+  "LOG_PERIOD": 10,
+  "DIST_BACKEND": "nccl",
+  "LOG_MODEL_INFO": true,
+  "LOG_CONFIG_INFO": true,
+  "OSS": {
+    "ENABLE": false,
+    "KEY": null,
+    "SECRET": null,
+    "ENDPOINT": null,
+    "CHECKPOINT_OUTPUT_PATH": null,
+    "SECONDARY_DATA_OSS": {
+      "ENABLE": false,
+      "KEY": null,
+      "SECRET": null,
+      "ENDPOINT": null,
+      "BUCKETS": [
+        ""
+      ]
+    }
+  },
+  "AUGMENTATION": {
+    "COLOR_AUG": false,
+    "BRIGHTNESS": 0.5,
+    "CONTRAST": 0.5,
+    "SATURATION": 0.5,
+    "HUE": 0.25,
+    "GRAYSCALE": 0.3,
+    "CONSISTENT": true,
+    "SHUFFLE": true,
+    "GRAY_FIRST": true,
+    "RATIO": [
+      0.857142857142857,
+      1.1666666666666667
+    ],
+    "USE_GPU": false,
+    "MIXUP": {
+      "ENABLE": false,
+      "ALPHA": 0.0,
+      "PROB": 1.0,
+      "MODE": "batch",
+      "SWITCH_PROB": 0.5
+    },
+    "CUTMIX": {
+      "ENABLE": false,
+      "ALPHA": 0.0,
+      "MINMAX": null
+    },
+    "RANDOM_ERASING": {
+      "ENABLE": false,
+      "PROB": 0.25,
+      "MODE": "const",
+      "COUNT": [
+        1,
+        1
+      ],
+      "NUM_SPLITS": 0,
+      "AREA_RANGE": [
+        0.02,
+        0.33
+      ],
+      "MIN_ASPECT": 0.3
+    },
+    "LABEL_SMOOTHING": 0.0,
+    "SSV2_FLIP": false
+  },
+  "PAI": false,
+  "USE_MULTISEG_VAL_DIST": false,
+  "FEATURES": {
+    "OUTPUT_PATH": "vivit_feats"
+  }
+}
+

@@ -18,11 +18,14 @@ import math
 
 import utils.bucket as bu
 import utils.distributed as du
-import utils.logging as logging
+# import utils.logging as logging
+import logging as logger 
+import logging
+logger.getLogger().setLevel(logging.INFO)
 
 from torch.hub import tqdm, load_state_dict_from_url as load_url
 
-logger = logging.get_logger(__name__)
+# logger = logging.get_logger(__name__)
 
 
 def make_checkpoint_dir(path_to_job):

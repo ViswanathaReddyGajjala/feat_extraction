@@ -7,7 +7,7 @@ TRAIN:
   ENABLE: false # true
   DATASET: epickitchen100
   BATCH_SIZE: 2
-  CHECKPOINT_FILE_PATH: ""
+  CHECKPOINT_FILE_PATH: "/home/viswa/TAdaConv/checkpoints/vivit_fac_enc_b16x2_pt_k700_ft_ek100_32x224x224_4630_public.pyth" # ""
 TEST:
   ENABLE: true
   DATASET: epickitchen100

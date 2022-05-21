@@ -10,40 +10,6 @@ import numpy as np
 import cv2
 
 
-def pack_pathway_output(cfg, frames):
-    """
-    Prepare output as a list of tensors. Each tensor corresponding to a
-    unique pathway.
-    Args:
-        frames (tensor): frames of images sampled from the video. The
-            dimension is `channel` x `num frames` x `height` x `width`.
-    Returns:
-        frame_list (list): list of tensors with the dimension of
-            `channel` x `num frames` x `height` x `width`.
-    """
-    if cfg.DATA.REVERSE_INPUT_CHANNEL:
-        frames = frames[[2, 1, 0], :, :, :]
-    if cfg.MODEL.ARCH == "slowfast":
-        fast_pathway = frames
-        """
-        # Perform temporal sampling from the fast pathway.
-        slow_pathway = torch.index_select(
-            frames,
-            1,
-            torch.linspace(
-                0, frames.shape[1] - 1, frames.shape[1] // cfg.SLOWFAST.ALPHA
-            ).long(),
-        )
-        frame_list = [slow_pathway, fast_pathway]
-        """
-        frame_list = [fast_pathway]
-    else:
-        raise NotImplementedError(
-            "Model arch {} is not in {}".format(cfg.MODEL.ARCH, ["slowfast"])
-        )
-    return frame_list
-
-
 class VideoDataset(torch.utils.data.Dataset):
     """
     Construct the untrimmed video loader, then sample
@@ -87,13 +53,13 @@ class VideoDataset(torch.utils.data.Dataset):
         self.num_frames = len(self.frame_list)
 
         # check frame folder
-        
         if self.num_frames != num_frames:
             print(
                 "{:s} has {:d} frames expecting {:d} frames".format(
                     vid_id, self.num_frames, num_frames
                 )
             )
+            print("potential issue during the frame extraction process")
 
     def _process_frame(self, arr):
         """
@@ -108,7 +74,7 @@ class VideoDataset(torch.utils.data.Dataset):
         arr = torch.from_numpy(arr).float()
 
         # Normalize the values
-        arr = arr / 255.0 # @TODO 
+        arr = arr / 255.0  # @TODO
         arr = arr - torch.tensor(self.cfg.DATA.MEAN)
         arr = arr / torch.tensor(self.cfg.DATA.STD)
 
@@ -147,32 +113,33 @@ class VideoDataset(torch.utils.data.Dataset):
         end = min(end, self.num_frames - 1)
 
         # we assume that the video is already downsampled
-        img_list = tuple()
+        img_list_left, img_list_center, img_list_right = tuple(), tuple(), tuple()
         for idx in range(start, end, self.step_size):
             img = cv2.imread(self.frame_list[idx])
-            
-            # Multi crop ensemble
-            if self.cfg.MULTI_CROP.LEFT:
-                img = img[:, :288, :] # 1st crop 
-            elif self.cfg.MULTI_CROP.MIDDLE:
-                img = img[:, 144: 432, :] # middle crop
-            elif self.cfg.MULTI_CROP.RIGHT:
-                img = img[:, -288: , :] # last crop
-            else:
-                raise ("Unsupported multicrop...")
-                
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # BGR --> RGB
-            img_list += (img[np.newaxis, :, :, :],)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # BGR --> RGB
 
+            img_left = img[:, :288, :]  # 1st crop
+            img_center = img[:, 144:432, :]  # middle crop
+            img_right = img[:, -288:, :]  # last crop
+
+            img_list_left += (img_left[np.newaxis, :, :, :],)
+            img_list_center += (img_center[np.newaxis, :, :, :],)
+            img_list_right += (img_right[np.newaxis, :, :, :],)
+
+        frame_list_left = self._pack_frames(img_list_left)
+        frame_list_center = self._pack_frames(img_list_center)
+        frame_list_right = self._pack_frames(img_list_right)
+
+        return [frame_list_left, frame_list_left, frame_list_right]
+
+    def _pack_frames(self, img_list):
         # T H W C
         decoded_frames = np.concatenate(img_list, axis=0)
         # T H W C (this will always return an array using newly allocated mem)
         clip = self._pad_to_length(decoded_frames)
         # BGR & -> C T H W
         clip = self._process_frame(np.ascontiguousarray(clip))
-        # create the pathways
-        frame_list = pack_pathway_output(self.cfg, clip)
-        return frame_list
+        return clip
 
     def __len__(self):
         """

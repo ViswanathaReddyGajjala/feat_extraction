@@ -8,6 +8,33 @@
 * Dataloader file used for extraction: [epic_kitchens](https://github.com/ViswanathaReddyGajjala/feat_extraction/blob/master/epic_kitches_dataloader.py). Code taken from the SlowFast feature extractor repo.
 
 
+## Dataset
+* The frames are extracted on the fly, so we can use videos directly.
+* All the videos need to be in a single directory.
+* You also need the `cfg.DATA.VID_LIST: sample_videos.txt` file, which simply contains two columns, the video name(without the extension) and number of frames in that video. Note there is no header.
+  Eg: ```Video Name: sample.mp4```
+  * ```sample_videos.txt``` content
+    ```
+    sample 15240
+    ```
+* For creating the dataset list
+   * Run ```ls /path/videos_folder >> epick100_videos_list.txt```
+   * ```python   
+      import cv2
+      videos_list_file = "epick100_videos_list.txt"
+      with open(videos_list_file) as f:
+          lines = [line.rstrip() for line in f]
+
+      with open("epick100_videos_list_with_frames.txt", "w") as fp:
+          for line in lines:
+              vid = line.split(" ")[0]
+              cap = cv2.VideoCapture(vid)
+              num_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+              vid = vid.split("/")[-1].split(".")[0]
+              videos.append((vid, num_frames))
+        fp.write(vid + " " + str(num_frames) + "\n")
+    ```
+
 # Feature Extraction old pipeline:
 
 * For feature extraction: ```python -W ignore runs/run.py --cfg configs/projects/epic-kitchen-ar/vivit_fac_enc_ek100.yaml ```

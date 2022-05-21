@@ -31,8 +31,7 @@
               cap = cv2.VideoCapture(vid)
               num_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
               vid = vid.split("/")[-1].split(".")[0]
-              videos.append((vid, num_frames))
-        fp.write(vid + " " + str(num_frames) + "\n")
+              fp.write(vid + " " + str(num_frames) + "\n")
     ```
 
 # Feature Extraction old pipeline:

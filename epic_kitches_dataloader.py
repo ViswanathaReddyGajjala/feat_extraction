@@ -147,22 +147,3 @@ class VideoDataset(torch.utils.data.Dataset):
             (int): the number of frames in the video.
         """
         return self.num_frames // self.stride
-
-
-# out_size = 10
-# num_frames = 36000
-# stride = 10
-# step_size = 1
-
-
-# len = num_frames // stride
-
-# start = int(index * stride)
-# end = int(index * stride + step_size * out_size)
-# end = min(end, num_frames - 1)
-
-# # we assume that the video is already downsampled
-# j =0
-# for idx in range(start, end, step_size):
-#     j+=1
-# j
